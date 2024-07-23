@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Computescore from '../components/Computescore'
 import Protectedarea from '../components/Protectedarea'
 import Map from '../components/Map'
+import Compositescore from '../components/Compositescore'
 
 const Mainpage = () => {
   return (
@@ -16,8 +17,9 @@ const Mainpage = () => {
                 <Protectedarea />
               </div>
 
-              <div>
+              <div className='flex'>
                 <Map />
+                <Compositescore />
               </div>
             </div>
         </div>
