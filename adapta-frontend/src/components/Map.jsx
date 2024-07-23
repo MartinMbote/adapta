@@ -42,6 +42,11 @@ const Map = () => {
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
         />
 
+        <TileLayer 
+          // attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+          url="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"
+        />
+
         {/* <Marker position={[-0.2456874990072913, 37.63907613354113]}>
           <Popup>
             Ocha
