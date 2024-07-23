@@ -10,7 +10,10 @@ export default {
       colors: {
         'adapta-blue': '#054061',  
         'adapta-grey': '#F3F3F3',  
-        'adapta-blue-light': '#467184',    
+        'adapta-blue-light': '#467184',  
+        'green': '#38AE63', 
+        'orange': '#F09951', 
+        'red': '#E7595A',
       },
     },
   },
