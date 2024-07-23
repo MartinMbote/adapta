@@ -8,7 +8,7 @@ const Mainpage = () => {
         <div>
             <Navbar />
 
-            <div className='pt-[2vw] pl-[1.4vw]'>
+            <div className='pt-[1vw] pl-[1vw]'>
               <Computescore />
             </div>
         </div>

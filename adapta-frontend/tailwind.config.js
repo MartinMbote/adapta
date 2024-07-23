@@ -9,7 +9,8 @@ export default {
     extend: {
       colors: {
         'adapta-blue': '#054061',  
-        'adapta-grey': '#F3F3F3',      
+        'adapta-grey': '#F3F3F3',  
+        'adapta-blue-light': '#467184',    
       },
     },
   },
