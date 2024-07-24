@@ -4,6 +4,7 @@ import Computescore from '../components/Computescore'
 import Protectedarea from '../components/Protectedarea'
 import Map from '../components/Map'
 import Compositescore from '../components/Compositescore'
+import Plan from '../components/Plan'
 
 const Mainpage = () => {
   return (
@@ -20,6 +21,7 @@ const Mainpage = () => {
               <div className='flex'>
                 <Map />
                 <Compositescore />
+                <Plan />
               </div>
             </div>
         </div>
