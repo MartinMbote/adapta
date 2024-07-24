@@ -16,6 +16,7 @@ const Compositescore = () => {
 
                 <div className='flex justify-center'>
                     <img src={piechartbg} className='w-[11vw]' />
+                    <img src={pieballimg} className='w-[11vw] absolute' style={{ transform: 'rotate(106deg)' }} />
                 </div>
 
                 <p className='text-center mt-[1.7vw] font-bold text-[0.9vw]'>
