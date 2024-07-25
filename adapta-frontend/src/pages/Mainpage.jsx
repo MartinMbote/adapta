@@ -27,7 +27,9 @@ const Mainpage = () => {
                 </div>
               </div>
 
-              <div>
+              <div className='flex gap-[1vw]'>
+                <Resultscards />
+                <Resultscards />
                 <Resultscards />
               </div>
             </div>

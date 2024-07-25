@@ -19,6 +19,7 @@ export default {
         'red': '#E7595A',
         'grey': '#CBCDCD',
         'yellow-light': '#F3E39F',
+        'blue-light': '#62C1F5',
       },
     },
   },

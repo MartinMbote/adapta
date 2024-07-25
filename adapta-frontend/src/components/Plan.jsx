@@ -2,7 +2,7 @@ import React from 'react'
 
 const Plan = () => {
   return (
-    <div className='bg-white w-[30vw] text-adapta-blue font-semibold text-[0.8vw] pt-[1vw] pb-[0.9vw] px-[1.3vw] rounded-[0.4vw] border-[0.15vw] border-adapta-grey'>
+    <div className='bg-white w-[32vw] h-[27.8vw] text-adapta-blue font-semibold text-[0.8vw] pt-[1vw] pb-[0.9vw] px-[1.3vw] rounded-[0.4vw] border-[0.15vw] border-adapta-grey'>
         <div className='text-adapta-blue-light'>
             <h1 className='underline text-[1.3vw] font-bold mb-[0.7vw]'>
                 CLIMATE ADAPTATION PLAN

@@ -27,7 +27,7 @@ const Resultscards = () => {
                         </p>
                     </div>
 
-                    <div className='border-[0.15vw] ml-[8vw] w-[8vw] h-[1.8vw] rounded-[1vw] text-center text-[0.9vw] border-yellow-light absolute mt-[0.3vw] pt-[0.1vw]'>
+                    <div className='border-[0.15vw] ml-[10vw] w-[8vw] h-[1.8vw] rounded-[1vw] text-center text-[0.9vw] border-yellow-light absolute mt-[0.9vw] pt-[0.1vw]'>
                         <p>
                             Climate Score
                         </p>
@@ -77,6 +77,10 @@ const Resultscards = () => {
                         </div>
                     </div>
                 </div>
+
+                <p className='text-blue-light underline cursor-pointer absolute mt-[0.4vw]'>
+                    View More
+                </p>
             </div>
         </div>
     </div>
