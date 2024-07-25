@@ -17,6 +17,8 @@ export default {
         'yellow': '#F8C33A',
         'green': '#2CA049',
         'red': '#E7595A',
+        'grey': '#CBCDCD',
+        'yellow-light': '#F3E39F',
       },
     },
   },

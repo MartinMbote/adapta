@@ -16,7 +16,17 @@ const Compositescore = () => {
 
                 <div className='flex justify-center'>
                     <img src={piechartbg} className='w-[11vw]' />
-                    <img src={pieballimg} className='w-[11vw] absolute' style={{ transform: 'rotate(106deg)' }} />
+                    <img src={pieballimg} className='w-[11vw] absolute' style={{ transform: 'rotate(-144deg)' }} />
+
+                    <div className='absolute mt-[3.2vw] ml-[0.5vw] text-[2.3vw] font-bold text-center'>
+                        <p>
+                            0%
+                        </p>
+
+                        <p className='text-[0.8vw] mt-[-0.5vw] font-bold text-adapta-blue-light'>
+                            Credit Score
+                        </p>
+                    </div>
                 </div>
 
                 <p className='text-center mt-[1.7vw] font-bold text-[0.9vw]'>
