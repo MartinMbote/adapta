@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../style.css";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, useMap, Marker, Popup, useMapEvents  } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
-const Map = () => {
+const Map = ({ location }) => {
+  const defaultPosition = [-0.2456874990072913, 37.63907613354113]; // Default position for map
+
+  const MapUpdater = ({ location }) => {
+    const map = useMap();
+    useEffect(() => {
+      if (location) {
+        map.setView(location, 13); // Update the view to the new location
+      }
+    }, [location, map]);
+    return null;
+  };
 
   const [markers, setMarkers] = useState([]);
   const provider = new OpenStreetMapProvider();
@@ -35,7 +46,7 @@ const Map = () => {
   };
 
   return (
-    <MapContainer center={[-0.2456874990072913, 37.63907613354113]} zoom={43}>
+    <MapContainer center={location || defaultPosition} zoom={43}>
         <TileLayer 
             // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             // url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -52,6 +63,16 @@ const Map = () => {
             Ocha
           </Popup>
         </Marker> */}
+
+        {/* {location && (
+          <Marker position={location}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        )} */}
+        
+        <MapUpdater location={location} />
 
         {markers.map((marker, index) => (
           <Marker 

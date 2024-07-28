@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import Select from 'react-select';
+import React, { useState, useCallback } from 'react'
+import Select from 'react-select';  // component from react-select for making dropdowns.
+import axios from 'axios';  //This is a library for making HTTP requests (e.g., to get data from a server).
+import { debounce } from 'lodash';  //The debounce function from lodash is used to delay the API call until the user stops typing.
 
-const Computescore = () => {   
+const Computescore = ({ onLocationChange }) => {   
     
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
@@ -17,9 +19,59 @@ const Computescore = () => {
         console.log(formJson);
       }
 
+
+    /////////Location Input/////////
+    const [locationoptions, setlocationoptions] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const handleInputChange = useCallback(
+        debounce(async (inputValue) => {
+        // if (!inputValue) {
+        //     setlocationoptions([]);
+        //     return;
+        // }
+
+        setLoading(true);
+        try {
+            // Make API call to OpenStreetMap to fetch location data
+            const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+            params: {
+                q: inputValue,  // Query parameter based on user input
+                format: 'json', // Response format
+                addressdetails: 1,  // Include detailed address information
+                limit: 10,  // Limit results to 10
+                countrycodes: 'KE', // Restrict search to Kenya
+            },
+            });
+
+            // Map API response to match the format required by react-select
+            const places = response.data.map((place) => ({
+            value: [parseFloat(place.lat), parseFloat(place.lon)],
+            label: place.display_name,
+            }));
+
+            setlocationoptions(places);     // Update state with new location options
+
+        } catch (error) {
+            console.error('Error fetching location data:', error);
+        } finally {
+            setLoading(false);
+        }
+        }, 1000),   // Wait 1000ms after the user stops typing to make the API call
+        []
+    );
+
+    // Function to handle when a location is selected
+    const handleLocationChange = (selectedOption) => {
+        onLocationChange(selectedOption.value); // Call the onLocationChange function passed as a prop with the selected location's value
+        // setlocationoptions(selectedOption);
+    };
+    /////////Location Input/////////
+
     
-    //
-    //Select Componet Code
+    
+    
+    ////Select Componet Code////
     const options = [
       { value: 'Avocado', label: 'Avocado' },
       { value: 'Tea', label: 'Tea' },
@@ -37,18 +89,19 @@ const Computescore = () => {
         control: (provided, state) => ({
           ...provided, // inherit the default styles
           background: 'white', // set the background color of the control
-          width: '12vw',
+          width: '14.4vw',
           height: '1vw',
           borderWidth: '0.15vw',
-          borderColor: state.isFocused ? 'blue' : '#F3F3F3', // change the border color based on focus state
+          marginTop: '0.2vw',
+          borderColor: state.isFocused ? '#054061' : '#F3F3F3', // change the border color based on focus state
           boxShadow: state.isFocused ? null : null, // remove the default box shadow
           '&:hover': {
-            borderColor: state.isFocused ? 'blue' : 'grey' // change the border color on hover
+            borderColor: state.isFocused ? '#054061' : 'grey' // change the border color on hover
           }
         }),
         option: (provided, state) => ({
           ...provided, // inherit the default styles
-          background: state.isSelected ? 'blue' : 'white', // set the background color based on selection state
+          background: state.isSelected ? '#054061' : 'white', // set the background color based on selection state
           color: state.isSelected ? 'white' : 'black', // set the text color based on selection state
           '&:hover': {
             background: 'lightgrey', // change the background color on hover
@@ -56,8 +109,7 @@ const Computescore = () => {
           }
         })
       };
-    // //
-    // //
+    ////Select Componet Code////
     
 
   return (
@@ -71,6 +123,16 @@ const Computescore = () => {
 
                     <input name="location" className='border-[0.15vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw]' />
                 </label>
+
+                <div>
+                    <Select
+                        placeholder="Enter name of location"
+                        options={locationoptions}
+                        onInputChange={handleInputChange}
+                        onChange={handleLocationChange}
+                        isLoading={loading}
+                    />
+                </div>
 
                 <label>
                     <br />
@@ -97,9 +159,11 @@ const Computescore = () => {
 
                 <div>
                     <label>
-                    Select a Crop:
+                        <span className='ml-[0.2vw]'>
+                            Select a Crop:
+                        </span>
 
-                    <br />
+                        <br />
 
                         <Select
                             value={selectedOption}
@@ -113,9 +177,9 @@ const Computescore = () => {
                     </label>
                 </div>
 
-                <div className='w-[12vw]'>
+                <div className='w-[14.4vw]'>
                     <div className='flex justify-center'>
-                        <button className='border w-[10vw] h-[1.8vw] rounded-[0.4vw] bg-adapta-blue-light text-white text-[0.8vw] font-semibold mt-[0.7vw]'>
+                        <button className='border w-[12vw] h-[2vw] rounded-[0.4vw] bg-adapta-blue-light text-white text-[0.8vw] font-semibold mt-[0.9vw]'>
                             Compute Score
                         </button>
                     </div>

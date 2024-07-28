@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Computescore from '../components/Computescore'
 import Protectedarea from '../components/Protectedarea'
@@ -8,6 +8,15 @@ import Plan from '../components/Plan'
 import Resultscards from '../components/Resultscards'
 
 const Mainpage = () => {
+
+  const [location, setLocation] = useState(null);
+
+  const handleLocationChange = (newLocation) => {
+    setLocation(newLocation);
+  };
+
+  console.log(location);
+
   return (
     <div>
         <div>
@@ -16,12 +25,12 @@ const Mainpage = () => {
             <div className='pt-[1vw] pl-[1vw]'>
               <div className='flex'>
                 <div className='mr-[1vw] mb-[1vw]'>
-                  <Computescore />
+                  <Computescore onLocationChange={handleLocationChange} />
                   <Protectedarea />
                 </div>
 
                 <div className='flex'>
-                  <Map />
+                  <Map location={location} />
                   <Compositescore />
                   <Plan />
                 </div>
