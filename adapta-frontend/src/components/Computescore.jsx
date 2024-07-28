@@ -183,6 +183,7 @@ const Computescore = ({ onLocationChange }) => {
                         onChange={handleLocationChange}
                         cacheOptions // Cache options to prevent redundant API calls
                         defaultOptions // Load default options initially
+                        styles={customStyles}
                     />
                 </div>
 

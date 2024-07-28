@@ -71,7 +71,7 @@ const Map = ({ location, setClickedPoint }) => {
         {location && (
           <Marker position={location}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              TODO : Location name 
             </Popup>
           </Marker>
         )}
