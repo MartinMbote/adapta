@@ -68,6 +68,33 @@ const Computescore = ({ onLocationChange }) => {
     //     // setlocationoptions(selectedOption);
     // };
     /////////Location Input/////////
+
+
+
+    /////////Month Input/////////
+    const monthOptions = [
+        { value: 'Jan', label: 'January' },
+        { value: 'Feb', label: 'Febuary' },
+        { value: 'March', label: 'March' },
+        { value: 'April', label: 'April' },
+        { value: 'May', label: 'May' },
+        { value: 'June', label: 'June' },
+        { value: 'July', label: 'July' },
+        { value: 'August', label: 'August' },
+        { value: 'Sept', label: 'September' },
+        { value: 'Oct', label: 'October' },
+        { value: 'Nov', label: 'November' },
+        { value: 'Dec', label: 'December' }
+      ];
+  
+  
+      const [selectedMonth, setSelectedMonth] = useState(null);
+  
+      const handleMonthChange = (selectedMonth) => {
+        setSelectedMonth(selectedMonth);
+      };
+    /////////Month Input/////////
+
     
     
     ////Select Componet Code////
@@ -92,6 +119,8 @@ const Computescore = ({ onLocationChange }) => {
           height: '1vw',
           borderWidth: '0.15vw',
           marginTop: '0.2vw',
+          marginBottom: '0.5vw',
+          cursor: 'pointer',
           borderColor: state.isFocused ? '#054061' : '#F3F3F3', // change the border color based on focus state
           boxShadow: state.isFocused ? null : null, // remove the default box shadow
           '&:hover': {
@@ -160,7 +189,14 @@ const Computescore = ({ onLocationChange }) => {
                         Enter Location:
                     </span>
 
-                    {/* <input name="location" className='border-[0.15vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw]' /> */}
+                    <AsyncSelect
+                        placeholder="Enter name of location"
+                        loadOptions={loadOptions} // Function to load options asynchronously
+                        onChange={handleLocationChange}
+                        cacheOptions // Cache options to prevent redundant API calls
+                        defaultOptions // Load default options initially
+                        styles={customStyles}
+                    />
                 </label>
 
                 {/* <div>
@@ -176,47 +212,25 @@ const Computescore = ({ onLocationChange }) => {
                     />
                 </div> */}
 
-                <div>
-                    <AsyncSelect
-                        placeholder="Enter name of location"
-                        loadOptions={loadOptions} // Function to load options asynchronously
-                        onChange={handleLocationChange}
-                        cacheOptions // Cache options to prevent redundant API calls
-                        defaultOptions // Load default options initially
-                        styles={customStyles}
-                    />
-                </div>
-
                 <label>
-                    <br />
                     <span className='ml-[0.3vw]'>
-                        Enter Planting Period:
-                    </span>
+                        Enter Month to start Planting :
+                    </span>                    
 
-                    <input name="plantingPeriod" className='border-[0.15vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw]' />
-                </label>             
-
-                <br />
-
-                {/* <label>
-                    Select a Crop:
-
-                    <br />
-
-                    <select name="selectedCrop" className='border-[0.15vw] px-[0.3vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw] cursor-pointer'>
-                        <option value="apple">Avocado</option>
-                        <option value="banana">Tea</option>
-                        <option value="orange">Crop</option>
-                    </select>
-                </label> */}
+                    <Select
+                        value={selectedMonth}
+                        onChange={handleMonthChange}
+                        options={monthOptions}
+                        placeholder="Enter Start Month"
+                        styles={customStyles}                        
+                    />
+                </label> 
 
                 <div>
                     <label>
                         <span className='ml-[0.2vw]'>
                             Select a Crop:
                         </span>
-
-                        <br />
 
                         <Select
                             value={selectedOption}

@@ -71,7 +71,7 @@ const Map = ({ location, setClickedPoint }) => {
         {location && (
           <Marker position={location}>
             <Popup>
-              TODO : Location name 
+              TODO : Location name to appear here
             </Popup>
           </Marker>
         )}
