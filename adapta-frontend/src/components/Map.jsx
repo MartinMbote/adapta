@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
-const Map = ({ location }) => {
+const Map = ({ location, setClickedPoint }) => {
   const defaultPosition = [-0.2456874990072913, 37.63907613354113]; // Default position for map
 
   const MapUpdater = ({ location }) => {
@@ -18,6 +18,7 @@ const Map = ({ location }) => {
   };
 
   const [markers, setMarkers] = useState([]);
+  // const [clickedPoint, setClickedPoint] = useState('');
   const provider = new OpenStreetMapProvider();
 
   const MapClickHandler = () => {
@@ -29,6 +30,7 @@ const Map = ({ location }) => {
         if (results && results.length > 0) {
           const locationName = results[0].label;
           console.log(`Location: ${locationName}`);
+          setClickedPoint(locationName);
 
           setMarkers([...markers, { lat, lng, locationName }]);
         } else {
@@ -40,6 +42,8 @@ const Map = ({ location }) => {
 
     return null;
   };
+
+  // console.log(clickedPoint);
 
   const handleMarkerClick = (index) => {
     setMarkers(markers.filter((_, i) => i !== index));
@@ -64,14 +68,14 @@ const Map = ({ location }) => {
           </Popup>
         </Marker> */}
 
-        {/* {location && (
+        {location && (
           <Marker position={location}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
           </Marker>
-        )} */}
-        
+        )}
+
         <MapUpdater location={location} />
 
         {markers.map((marker, index) => (

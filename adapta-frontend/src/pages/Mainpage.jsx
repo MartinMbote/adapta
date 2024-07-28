@@ -10,12 +10,14 @@ import Resultscards from '../components/Resultscards'
 const Mainpage = () => {
 
   const [location, setLocation] = useState(null);
+  const [clickedPoint, setClickedPoint] = useState('');
 
   const handleLocationChange = (newLocation) => {
     setLocation(newLocation);
   };
 
   console.log(location);
+  console.log("Clicked Location Update : " + clickedPoint);
 
   return (
     <div>
@@ -30,7 +32,7 @@ const Mainpage = () => {
                 </div>
 
                 <div className='flex'>
-                  <Map location={location} />
+                  <Map location={location} setClickedPoint={setClickedPoint} />
                   <Compositescore />
                   <Plan />
                 </div>

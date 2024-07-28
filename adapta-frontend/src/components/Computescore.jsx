@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import Select from 'react-select';  // component from react-select for making dropdowns.
 import axios from 'axios';  //This is a library for making HTTP requests (e.g., to get data from a server).
 import { debounce } from 'lodash';  //The debounce function from lodash is used to delay the API call until the user stops typing.
+import AsyncSelect from 'react-select/async';
 
 const Computescore = ({ onLocationChange }) => {   
     
@@ -20,55 +21,53 @@ const Computescore = ({ onLocationChange }) => {
       }
 
 
-    /////////Location Input/////////
     const [locationoptions, setlocationoptions] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const handleInputChange = useCallback(
-        debounce(async (inputValue) => {
-        // if (!inputValue) {
-        //     setlocationoptions([]);
-        //     return;
-        // }
-
-        setLoading(true);
-        try {
-            // Make API call to OpenStreetMap to fetch location data
-            const response = await axios.get('https://nominatim.openstreetmap.org/search', {
-            params: {
-                q: inputValue,  // Query parameter based on user input
-                format: 'json', // Response format
-                addressdetails: 1,  // Include detailed address information
-                limit: 10,  // Limit results to 10
-                countrycodes: 'KE', // Restrict search to Kenya
-            },
-            });
-
-            // Map API response to match the format required by react-select
-            const places = response.data.map((place) => ({
-            value: [parseFloat(place.lat), parseFloat(place.lon)],
-            label: place.display_name,
-            }));
-
-            setlocationoptions(places);     // Update state with new location options
-
-        } catch (error) {
-            console.error('Error fetching location data:', error);
-        } finally {
-            setLoading(false);
-        }
-        }, 1000),   // Wait 1000ms after the user stops typing to make the API call
-        []
-    );
-
-    // Function to handle when a location is selected
-    const handleLocationChange = (selectedOption) => {
-        onLocationChange(selectedOption.value); // Call the onLocationChange function passed as a prop with the selected location's value
-        // setlocationoptions(selectedOption);
-    };
     /////////Location Input/////////
+    // const handleInputChange = useCallback(
+    //     debounce(async (inputValue) => {
+    //     if (!inputValue || typeof inputValue !== 'string') {
+    //         setlocationoptions([]);
+    //         return;
+    //     }
 
-    
+    //     setLoading(true);
+    //     try {
+    //         // Make API call to OpenStreetMap to fetch location data
+    //         const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+    //         params: {
+    //             q: inputValue,  // Query parameter based on user input
+    //             format: 'json', // Response format
+    //             addressdetails: 0,  // Include detailed address information
+    //             limit: 10,  // Limit results to 10
+    //             countrycodes: 'KE', // Restrict search to Kenya
+    //         },
+    //         });
+
+    //         // Map API response to match the format required by react-select
+    //         const places = response.data.map((place) => ({
+    //         value: [parseFloat(place.lat), parseFloat(place.lon)],
+    //         label: place.display_name,
+    //         }));
+
+    //         setlocationoptions(places);     // Update state with new location options
+
+    //     } catch (error) {
+    //         console.error('Error fetching location data:', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    //     }, 1000),   // Wait 1000ms after the user stops typing to make the API call
+    //     []
+    // );
+
+    // // Function to handle when a location is selected
+    // const handleLocationChange = (selectedOption) => {
+    //     onLocationChange(selectedOption.value); // Call the onLocationChange function passed as a prop with the selected location's value
+    //     // setlocationoptions(selectedOption);
+    // };
+    /////////Location Input/////////
     
     
     ////Select Componet Code////
@@ -110,6 +109,46 @@ const Computescore = ({ onLocationChange }) => {
         })
       };
     ////Select Componet Code////
+
+
+
+    /////////Asynch Location Input/////////
+    const loadOptions = async (inputValue) => {
+        if (!inputValue) {
+          return [];
+        }
+    
+        try {
+          const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+            params: {
+              q: inputValue,
+              format: 'json',
+              addressdetails: 1,
+              limit: 10,
+              countrycodes: 'KE',
+            },
+          });
+    
+          // Map API response to the format required by react-select
+          const places = response.data.map((place) => ({
+            value: [parseFloat(place.lat), parseFloat(place.lon)],
+            label: place.display_name,
+          }));
+    
+          return places;
+        } catch (error) {
+          console.error('Error fetching location data:', error);
+          return [];
+        }
+      };
+    
+      // Function to handle location change
+      const handleLocationChange = (selectedOption) => {
+        if (selectedOption && selectedOption.value) {
+          onLocationChange(selectedOption.value);
+        }
+      };
+    /////////Asynch Location Input/////////
     
 
   return (
@@ -121,16 +160,29 @@ const Computescore = ({ onLocationChange }) => {
                         Enter Location:
                     </span>
 
-                    <input name="location" className='border-[0.15vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw]' />
+                    {/* <input name="location" className='border-[0.15vw] mb-[0.5vw] rounded-[0.4vw] mt-[0.2vw] w-[12vw] h-[1.6vw]' /> */}
                 </label>
 
-                <div>
+                {/* <div>
                     <Select
                         placeholder="Enter name of location"
                         options={locationoptions}
-                        onInputChange={handleInputChange}
+                        onInputChange={(value) => handleInputChange(value)}
                         onChange={handleLocationChange}
                         isLoading={loading}
+                        filterOption={(option, rawInput) => 
+                          option.label.toLowerCase().includes(rawInput.toLowerCase()) // Custom filter logic
+                        }
+                    />
+                </div> */}
+
+                <div>
+                    <AsyncSelect
+                        placeholder="Enter name of location"
+                        loadOptions={loadOptions} // Function to load options asynchronously
+                        onChange={handleLocationChange}
+                        cacheOptions // Cache options to prevent redundant API calls
+                        defaultOptions // Load default options initially
                     />
                 </div>
 
