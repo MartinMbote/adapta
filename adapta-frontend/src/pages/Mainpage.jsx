@@ -27,7 +27,7 @@ const Mainpage = () => {
             <div className='pt-[1vw] pl-[1vw]'>
               <div className='flex'>
                 <div className='mr-[1vw] mb-[1vw]'>
-                  <Computescore onLocationChange={handleLocationChange} />
+                  <Computescore onLocationChange={handleLocationChange}  clickedPoint={clickedPoint} />
                   <Protectedarea />
                 </div>
 

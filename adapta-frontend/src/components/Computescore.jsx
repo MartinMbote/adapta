@@ -1,10 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Select from 'react-select';  // component from react-select for making dropdowns.
 import axios from 'axios';  //This is a library for making HTTP requests (e.g., to get data from a server).
 import { debounce } from 'lodash';  //The debounce function from lodash is used to delay the API call until the user stops typing.
 import AsyncSelect from 'react-select/async';
 
-const Computescore = ({ onLocationChange }) => {   
+const Computescore = ({ onLocationChange,clickedPoint }) => {   
     
     function handleSubmit(e) {
         // Prevent the browser from reloading the page
@@ -18,8 +18,9 @@ const Computescore = ({ onLocationChange }) => {
         // Or you can work with it as a plain object:
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
+        
       }
-
+console.log(clickedPoint);
 
     const [locationoptions, setlocationoptions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -99,10 +100,34 @@ const Computescore = ({ onLocationChange }) => {
     
     ////Select Componet Code////
     const options = [
-      { value: 'Avocado', label: 'Avocado' },
-      { value: 'Tea', label: 'Tea' },
-      { value: 'Banana', label: 'Banana' }
-    ];
+        { value: 'Avocado', label: 'Avocado' },
+        { value: 'Tea', label: 'Tea' },
+        { value: 'Banana', label: 'Banana' },
+        { value: 'Coffee', label: 'Coffee' },
+        { value: 'Maize', label: 'Maize' },
+        { value: 'Sugarcane', label: 'Sugarcane' },
+        { value: 'Tomatoes', label: 'Tomatoes' },
+        { value: 'Potatoes', label: 'Potatoes' },
+        { value: 'Cabbage', label: 'Cabbage' },
+        { value: 'Onions', label: 'Onions' },
+        { value: 'French Beans', label: 'French Beans' },
+        { value: 'Mangoes', label: 'Mangoes' },
+        { value: 'Pineapples', label: 'Pineapples' },
+        { value: 'Macadamia', label: 'Macadamia' },
+        { value: 'Cashew Nuts', label: 'Cashew Nuts' },
+        { value: 'Sorghum', label: 'Sorghum' },
+        { value: 'Millet', label: 'Millet' },
+        { value: 'Passion Fruit', label: 'Passion Fruit' },
+        { value: 'Pyrethrum', label: 'Pyrethrum' },
+        { value: 'Flowers', label: 'Flowers' },
+        { value: 'Cotton', label: 'Cotton' },
+        { value: 'Tobacco', label: 'Tobacco' },
+        { value: 'Sisals', label: 'Sisals' },
+        { value: 'Wheat', label: 'Wheat' },
+        { value: 'Barley', label: 'Barley' },
+        { value: 'Sunflower', label: 'Sunflower' }
+      ];
+      
 
 
     const [selectedOption, setSelectedOption] = useState(null);
@@ -139,6 +164,16 @@ const Computescore = ({ onLocationChange }) => {
       };
     ////Select Componet Code////
 
+    const [selectedLocation, setSelectedLocation] = useState(null);
+      
+    useEffect(() => {
+        if (clickedPoint) {
+          setSelectedLocation({ value: clickedPoint, label: clickedPoint });
+        } else {
+          setSelectedLocation(null);
+        }
+      }, [clickedPoint]);
+
 
 
     /////////Asynch Location Input/////////
@@ -174,7 +209,7 @@ const Computescore = ({ onLocationChange }) => {
       // Function to handle location change
       const handleLocationChange = (selectedOption) => {
         if (selectedOption && selectedOption.value) {
-          onLocationChange(selectedOption.value);
+          onLocationChange(selectedOption.value);          
         }
       };
     /////////Asynch Location Input/////////
@@ -192,10 +227,11 @@ const Computescore = ({ onLocationChange }) => {
                     <AsyncSelect
                         placeholder="Enter name of location"
                         loadOptions={loadOptions} // Function to load options asynchronously
-                        onChange={handleLocationChange}
+                        onChange={handleLocationChange}                       
                         cacheOptions // Cache options to prevent redundant API calls
                         defaultOptions // Load default options initially
                         styles={customStyles}
+                        // value={selectedLocation}
                     />
                 </label>
 
